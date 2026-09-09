@@ -6,7 +6,6 @@ on:
     paths:
       - 'blender/**'
       - '.github/workflows/shadowfall-assets.yml'
-      - 'public/assets/3d/**'
   workflow_dispatch:
 
 permissions:
