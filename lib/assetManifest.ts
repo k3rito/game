@@ -5,6 +5,7 @@ export const shadowfallAssets={
   stalker:`${ASSET_BASE}/enemy-stalker.glb`,
   caster:`${ASSET_BASE}/enemy-caster.glb`,
   brute:`${ASSET_BASE}/enemy-brute.glb`,
+  boss:`${ASSET_BASE}/enemy-boss.glb`,
   arena:`${ASSET_BASE}/arena.glb`,
 } as const;
 
