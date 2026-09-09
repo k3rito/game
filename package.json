@@ -1,1 +1,8 @@
-{"name":"k3rito-shadowfall","version":"1.0.0","private":true,"scripts":{"dev":"next dev","build":"next build","start":"next start"},"dependencies":{"next":"latest","react":"latest","react-dom":"latest","lucide-react":"latest"},"devDependencies":{"@types/node":"latest","@types/react":"latest","@types/react-dom":"latest","typescript":"latest"}}
+{
+  "name":"k3rito-shadowfall",
+  "version":"1.1.0",
+  "private":true,
+  "scripts":{"dev":"next dev","build":"next build","start":"next start"},
+  "dependencies":{"next":"latest","react":"latest","react-dom":"latest","lucide-react":"latest","three":"latest"},
+  "devDependencies":{"@types/node":"latest","@types/react":"latest","@types/react-dom":"latest","@types/three":"latest","typescript":"latest"}
+}
