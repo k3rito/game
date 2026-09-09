@@ -6,9 +6,10 @@ finite transforms, approximate playable scale and missing materials.
 import bpy
 import math
 import os
+import sys
 
 ASSET_DIR=os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'public', 'assets', '3d'))
-FILES=['player.glb','enemy-stalker.glb','enemy-caster.glb','enemy-brute.glb','arena.glb']
+FILES=['player.glb','enemy-stalker.glb','enemy-caster.glb','enemy-brute.glb','enemy-boss.glb','arena.glb']
 
 
 def finite(v):
@@ -19,7 +20,10 @@ def validate(path):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     if not os.path.exists(path):
         return False, ['missing file']
-    bpy.ops.import_scene.gltf(filepath=path)
+    try:
+        bpy.ops.import_scene.gltf(filepath=path)
+    except Exception as exc:
+        return False, [f'import failed: {exc}']
     objects=[o for o in bpy.context.scene.objects if o.type=='MESH']
     issues=[]
     if not objects:
@@ -34,6 +38,11 @@ def validate(path):
     return not issues, issues
 
 
+failed=False
 for filename in FILES:
     ok, issues=validate(os.path.join(ASSET_DIR, filename))
     print(('PASS' if ok else 'FAIL'), filename, '; '.join(issues))
+    failed |= not ok
+
+if failed:
+    sys.exit(1)
