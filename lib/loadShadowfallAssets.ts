@@ -21,7 +21,7 @@ export function loadShadowfallAsset(name:ShadowfallAssetName){
   return load(shadowfallAssets[name]);
 }
 
-export async function loadShadowfallPack(names:ShadowfallAssetName[]=['player','stalker','caster','brute','arena']){
+export async function loadShadowfallPack(names:ShadowfallAssetName[]=['player','stalker','caster','brute','boss','arena']){
   const entries=await Promise.all(names.map(async name=>[name,await loadShadowfallAsset(name)] as const));
   return Object.fromEntries(entries) as Record<ShadowfallAssetName,ShadowfallAsset>;
 }
