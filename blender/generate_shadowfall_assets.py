@@ -46,6 +46,7 @@ GOLD = mat('Royal Gold', (.75, .48, .08), .9, .2)
 VOID = mat('Void Energy', (.35, .18, 1.0), .15, .24, (.35, .18, 1.0))
 CRIMSON = mat('Enemy Crimson', (.72, .08, .22), .35, .35, (.32, .015, .04))
 TEAL = mat('Enemy Teal', (.04, .55, .52), .35, .35, (.02, .28, .26))
+BOSS = mat('Boss Royal Void', (.26, .10, .62), .7, .22, (.34, .10, .95))
 
 
 def apply_mat(obj, material):
@@ -84,10 +85,18 @@ def player():
     return root
 
 
-def enemy(name, material, brute=False):
+def enemy(name, material, brute=False, boss=False):
     root = bpy.data.objects.new(name, None)
     bpy.context.collection.objects.link(root)
-    if brute:
+    if boss:
+        primitive('ico_sphere', 'BossCore', (0, 0, 1.35), (1.25, 1.25, 1.25), material, subdivisions=2).parent = root
+        for radius, height in ((1.55, .18), (1.87, .62)):
+            ring = primitive('torus', 'BossRing', (0, 0, height), (radius, radius, radius), VOID, major_radius=1, minor_radius=.055, major_segments=32, minor_segments=8)
+            ring.rotation_euler.x = math.pi / 2
+            ring.parent = root
+        for x in (-.72, .72):
+            primitive('cone', 'BossHorn', (x, 0, 2.15), (.20, .20, .52), DARK, vertices=8, radius1=1, radius2=0, depth=1).parent = root
+    elif brute:
         primitive('ico_sphere', 'Core', (0, 0, .72), (.72, .72, .72), material, subdivisions=2).parent = root
         for x in (-.42, .42):
             horn = primitive('cone', 'Horn', (x, 0, 1.12), (.17, .17, .38), DARK, vertices=8, radius1=1, radius2=0, depth=1)
@@ -130,6 +139,7 @@ def main():
     clear(); export(enemy('SF_Stalker', CRIMSON), 'enemy-stalker.glb')
     clear(); export(enemy('SF_Caster', TEAL), 'enemy-caster.glb')
     clear(); export(enemy('SF_Brute', CRIMSON, brute=True), 'enemy-brute.glb')
+    clear(); export(enemy('SF_Boss', BOSS, boss=True), 'enemy-boss.glb')
     clear(); export(arena(), 'arena.glb')
     print('Shadowfall Blender assets exported to', OUT)
 
